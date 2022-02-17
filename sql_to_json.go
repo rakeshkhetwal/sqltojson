@@ -1,13 +1,12 @@
 package sqltojson	
 
 import (
-    //  _ "github.com/go-sql-driver/mysql"
-	// "github.com/xwb1989/sqlparser"
 	"database/sql"
 )
 
 
 func SqlToJson(db *sql.DB, query string) (error,[]map[string]interface {}){
+	// prepared statement for repeated use.
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return err, nil
@@ -16,7 +15,6 @@ func SqlToJson(db *sql.DB, query string) (error,[]map[string]interface {}){
 
 	rows, err := stmt.Query()
 	if err != nil {
-		// standardLogger.ErrorMessage(err,"")
 		return err, nil
 	}else {
 		defer rows.Close()
@@ -50,6 +48,7 @@ func SqlToJson(db *sql.DB, query string) (error,[]map[string]interface {}){
 				}
 				entry[col] = v
 			}
+			//appending entry into array
 			queryData = append(queryData, entry)
 		}
 
