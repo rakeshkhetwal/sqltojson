@@ -4,6 +4,7 @@ import (
 	"database/sql"
 )
 
+//converting sql rows into json data
 func SqlToJson(db *sql.DB, query string) (error,[]map[string]interface {}){
 	// prepared statement for repeated use.
 	stmt, err := db.Prepare(query)
